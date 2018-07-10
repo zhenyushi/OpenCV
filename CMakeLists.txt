@@ -15,7 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   sensor_msgs
 )
-
+find_package(OpenCV REQUIRED)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -152,6 +152,11 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
+
+add_executable(imagesub src/imagesub.cpp)
+target_link_libraries (imagesub ${catkin_LIBRARIES} ${Boost_LIBRARIES} 	${OpenCV_LIBRARIES})
+
+
 
 #############
 ## Install ##
