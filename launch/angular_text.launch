@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="world" default="worlds/empty.world"/>
+  <arg name="gui" default="true"/>
+  <arg name="args" default=""/>
+  
+  <param name="/use_sim_time" value="true" />
+
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" args="$(arg world) $(arg args)" respawn="false" output="screen"/>
+  
+    <!-- start gui -->
+  <group if="$(arg gui)">
+    <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" output="screen"/>
+  </group>
+
+  <node name="spawn_model_dualCameras" pkg="gazebo_ros" type="spawn_model"
+  args="-file $(find open_cv)/models/dual_cameras/model.sdf -sdf -model dual_cameras 
+  -x 0 -y 0 -z 0" output="screen" />
+
+  <node name="spawn_model_cube_1" pkg="gazebo_ros" type="spawn_model"
+  args="-file $(find open_cv)/models/cube_black/model.sdf -sdf -model cube_blk_1 
+  -x 2 -y 0 -z 1" output="screen" />
+
+  <node name="imagesub" pkg="open_cv" type="imagesub" output="screen" />
+
+  
+
+</launch>

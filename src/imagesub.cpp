@@ -17,8 +17,13 @@ first person view of the turtlebot.
 #include <opencv2/highgui/highgui.hpp>
 #include <cv_bridge/cv_bridge.h>
 
+#include <string>
+#include <stdio.h>
 
+#include <fstream>
+#include <iostream>
 
+using namespace std;
 // define callback function in a class so that data running inside the class can be used globally
 class Listener_image
 {
@@ -64,11 +69,28 @@ int main(int argc, char **argv)
   listener_right.image = image_final(cv::Range(0,1200),cv::Range(960,1920));
 
 
+
+    cv::Point left;
+    left.x = 300;
+    left.y = 500;
+    cv::Point right;
+    right.x = left.x + 960 - 60;
+    right.y = left.y;
+
+    double textsize = 1;
+    int thickness=3;
+
+
   while(ros::ok())
   {
   ros::spinOnce(); 
   // ros::spin() works too, but extra code can run outside the callback function between each spinning if spinOnce() is used
-  
+
+    char text[255];
+    sprintf(text, "%d", (int)ros::Time::now().sec);
+
+    cv::putText( image_final, text, left, 0,textsize, cv::Scalar(255,255,255), thickness, 8);
+    cv::putText( image_final, text, right, 0,textsize, cv::Scalar(255,255,255), thickness, 8);
 
     if(listener_left.image.cols!=0 && listener_right.image.cols!=0) 
     {
