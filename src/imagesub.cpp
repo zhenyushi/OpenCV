@@ -78,7 +78,7 @@ int main(int argc, char **argv)
     right.y = left.y;
 
     double textsize = 1;
-    int thickness=3;
+    int thickness=2;
 
 
   while(ros::ok())
@@ -87,7 +87,7 @@ int main(int argc, char **argv)
   // ros::spin() works too, but extra code can run outside the callback function between each spinning if spinOnce() is used
 
     char text[255];
-    sprintf(text, "%d", (int)ros::Time::now().sec);
+    sprintf(text, "%d . %d", (int)ros::Time::now().sec,(int)ros::Time::now().nsec);
 
     cv::putText( image_final, text, left, 0,textsize, cv::Scalar(255,255,255), thickness, 8);
     cv::putText( image_final, text, right, 0,textsize, cv::Scalar(255,255,255), thickness, 8);
